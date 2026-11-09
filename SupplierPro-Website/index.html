@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SupplierPro | Supplier Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><b>SupplierPro</b><small>MANAGEMENT SUITE</small></div></div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav>
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-page="suppliers"><span>♙</span> Suppliers <em id="supplierNavCount">0</em></button>
+      <button class="nav-item" data-page="products"><span>▤</span> Products <em id="productNavCount">0</em></button>
+      <button class="nav-item" data-page="assignments"><span>⇄</span> Assignments</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="help-card"><div class="help-icon">✦</div><b>Need a hand?</b><p>Manage your supplier network with ease.</p><span>SUPPLIERPRO · 1.0</span></div><div class="profile"><div class="avatar">AD</div><div><b>Administrator</b><small>Project workspace</small></div><span class="dots">•••</span></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><button class="mobile-menu" id="mobileMenu">☰</button><div class="crumb">Workspace <span>/</span> <b id="crumbName">Dashboard</b></div><div class="top-actions"><span class="today" id="today"></span><div class="top-avatar">AD</div></div></header>
+    <section class="content">
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><div class="eyebrow">OVERVIEW</div><h1>Good day, Admin <span>✦</span></h1><p>Here's what's happening with your supplier network today.</p></div><button class="btn primary" onclick="openSupplierModal()">＋ Add supplier</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total suppliers</span><span class="stat-icon purple">♙</span></div><strong id="statSuppliers">0</strong><small><i class="dot purple-dot"></i> Registered suppliers</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Active suppliers</span><span class="stat-icon green">✓</span></div><strong id="statActive">0</strong><small><i class="dot green-dot"></i> Ready for assignments</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Total products</span><span class="stat-icon blue">▤</span></div><strong id="statProducts">0</strong><small><i class="dot blue-dot"></i> In product catalogue</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Assignments</span><span class="stat-icon orange">⇄</span></div><strong id="statAssignments">0</strong><small><i class="dot orange-dot"></i> Supplier-product links</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel"><div class="panel-heading"><div><h2>Recent suppliers</h2><p>Your latest supplier records</p></div><button class="text-btn" onclick="navigate('suppliers')">View all →</button></div><div class="table-wrap"><table><thead><tr><th>SUPPLIER</th><th>EMAIL</th><th>STATUS</th></tr></thead><tbody id="recentSuppliers"></tbody></table></div><div class="empty-state" id="recentEmpty">No suppliers yet. Add your first supplier to get started.</div></article>
+          <article class="panel quick-panel"><div class="panel-heading"><div><h2>Quick actions</h2><p>Common workspace tasks</p></div></div><button class="quick-action" onclick="openSupplierModal()"><span class="quick-symbol purple">＋</span><span><b>Add a supplier</b><small>Create a new supplier record</small></span><i>→</i></button><button class="quick-action" onclick="openProductModal()"><span class="quick-symbol blue">▤</span><span><b>Add a product</b><small>Expand your product catalogue</small></span><i>→</i></button><button class="quick-action" onclick="navigate('assignments')"><span class="quick-symbol orange">⇄</span><span><b>New assignment</b><small>Link a supplier to a product</small></span><i>→</i></button></article>
+        </div>
+        <article class="panel tip-panel"><div class="tip-badge">✦</div><div><b>Keep your supplier data up to date</b><p>Review supplier status regularly. Only active suppliers can receive new product assignments.</p></div></article>
+      </section>
+      <section class="page" id="page-suppliers">
+        <div class="page-heading"><div><div class="eyebrow">DIRECTORY</div><h1>Suppliers</h1><p>Manage your supplier relationships and contact details.</p></div><button class="btn primary" onclick="openSupplierModal()">＋ Add supplier</button></div>
+        <article class="panel"><div class="toolbar"><div class="search-box"><span>⌕</span><input id="supplierSearch" placeholder="Search suppliers by name, email or phone..."></div><select id="supplierStatus"><option value="ALL">All statuses</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select><span class="result-count" id="supplierCount"></span></div><div class="table-wrap"><table><thead><tr><th>SUPPLIER</th><th>CONTACT</th><th>PHONE</th><th>ADDRESS</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="supplierRows"></tbody></table></div><div class="empty-state" id="supplierEmpty">No suppliers found. Add a supplier to begin.</div></article>
+      </section>
+      <section class="page" id="page-products">
+        <div class="page-heading"><div><div class="eyebrow">CATALOGUE</div><h1>Products</h1><p>Keep your products, SKUs and supplier links organised.</p></div><button class="btn primary" onclick="openProductModal()">＋ Add product</button></div>
+        <article class="panel"><div class="toolbar"><div class="search-box"><span>⌕</span><input id="productSearch" placeholder="Search by product name, SKU or description..."></div><span class="result-count" id="productCount"></span></div><div class="table-wrap"><table><thead><tr><th>PRODUCT</th><th>SKU</th><th>DESCRIPTION</th><th>SUPPLIERS</th><th>ACTIONS</th></tr></thead><tbody id="productRows"></tbody></table></div><div class="empty-state" id="productEmpty">No products found. Add your first product.</div></article>
+      </section>
+      <section class="page" id="page-assignments">
+        <div class="page-heading"><div><div class="eyebrow">RELATIONSHIPS</div><h1>Supply assignments</h1><p>Connect products with the suppliers who provide them.</p></div></div>
+        <div class="assignment-layout"><article class="panel assign-form"><div class="panel-heading"><div><h2>Create assignment</h2><p>Choose an active supplier and a product.</p></div><div class="stat-icon orange">⇄</div></div><form id="assignmentForm"><label for="assignSupplier">Supplier</label><select id="assignSupplier" required><option value="">Select a supplier</option></select><label for="assignProduct">Product</label><select id="assignProduct" required><option value="">Select a product</option></select><button class="btn primary full" type="submit">＋ Create assignment</button></form><div class="form-note">ⓘ Inactive suppliers cannot be selected for new assignments. Existing assignments remain visible.</div></article><article class="panel"><div class="panel-heading"><div><h2>Current assignments</h2><p>All supplier-product relationships</p></div><span class="count-pill" id="assignmentCount">0</span></div><div id="assignmentList" class="assignment-list"></div><div class="empty-state" id="assignmentEmpty">No assignments yet. Create one using the form.</div></article></div>
+      </section>
+    </section>
+  </main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><div><div class="eyebrow" id="modalEyebrow">SUPPLIER DETAILS</div><h2 id="modalTitle">Add supplier</h2></div><button class="close-btn" id="closeModal">×</button></div><form id="recordForm"><div id="formFields"></div><div class="modal-actions"><button type="button" class="btn secondary" id="cancelModal">Cancel</button><button type="submit" class="btn primary" id="saveRecord">Save supplier</button></div></form></div></div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
